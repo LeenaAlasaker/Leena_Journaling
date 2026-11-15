@@ -21,4 +21,7 @@ class JournalViewModel: ObservableObject {
         }
     }
     
+    func deleteJournal(_ journal: Journal) {
+        journals.removeAll { $0.id == journal.id }
+    }
 }

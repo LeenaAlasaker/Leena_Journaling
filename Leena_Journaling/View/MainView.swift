@@ -4,7 +4,6 @@
 //
 //  Created by Leena Alasaker on 12/11/2026.
 //
-
 import SwiftUI
 
 struct MainView: View {
@@ -12,6 +11,8 @@ struct MainView: View {
     @StateObject private var viewModel = JournalViewModel()
     @State private var searchText = ""
     @State private var showNewJournal = false
+    @State private var showDeleteAlert = false
+    @State private var journalToDelete: Journal?
 
     var body: some View {
         NavigationStack {
@@ -24,6 +25,15 @@ struct MainView: View {
                             .listRowBackground(Color.clear)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: 8, leading: 20, bottom: 8, trailing: 20))
+                            .swipeActions(allowsFullSwipe: false) {
+                                Button {
+                                    journalToDelete = journal
+                                    showDeleteAlert = true
+                                } label: {
+                                    Image(systemName: "trash")
+                                }
+                                .tint(.red)
+                            }
                     }
                     .listStyle(.plain)
                 }
@@ -42,6 +52,15 @@ struct MainView: View {
             }
         }
         .preferredColorScheme(.dark)
+        .overlay {
+            if showDeleteAlert {
+                DeleteAlertView(
+                    isPresented: $showDeleteAlert,
+                    viewModel: viewModel,
+                    journal: journalToDelete
+                )
+            }
+        }
     }
 }
 
