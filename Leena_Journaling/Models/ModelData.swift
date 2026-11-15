@@ -14,7 +14,6 @@ struct Journal: Identifiable {
     var content: String
     var isBookmarked = false
 
-    // التاريخ بشكل 02/09/2024
     var formattedDate: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"

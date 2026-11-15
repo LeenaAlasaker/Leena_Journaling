@@ -13,6 +13,7 @@ struct MainView: View {
     @State private var showNewJournal = false
     @State private var showDeleteAlert = false
     @State private var journalToDelete: Journal?
+    @State private var journalToEdit: Journal?
 
     var body: some View {
         NavigationStack {
@@ -22,6 +23,9 @@ struct MainView: View {
                 } else {
                     List(viewModel.journals) { journal in
                         JournalCardView(journal: journal, viewModel: viewModel)
+                            .onTapGesture {
+                                journalToEdit = journal
+                            }
                             .listRowBackground(Color.clear)
                             .listRowSeparator(.hidden)
                             .listRowInsets(EdgeInsets(top: 8, leading: 20, bottom: 8, trailing: 20))
@@ -49,6 +53,9 @@ struct MainView: View {
             .searchable(text: $searchText)
             .sheet(isPresented: $showNewJournal) {
                 NewJournalView(viewModel: viewModel)
+            }
+            .sheet(item: $journalToEdit) { journal in
+                EditJournalView(viewModel: viewModel, journal: journal)
             }
         }
         .preferredColorScheme(.dark)
