@@ -10,7 +10,14 @@ import Foundation
 struct Journal: Identifiable {
     let id = UUID()
     var title: String
+    var date = Date()
     var content: String
-    var date: Date = Date()
-    var isBookmarked: Bool = false
+    var isBookmarked = false
+
+    // التاريخ بشكل 02/09/2024
+    var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        return formatter.string(from: date)
+    }
 }

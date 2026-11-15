@@ -15,7 +15,8 @@ struct SplashView: View {
     var body: some View {
         if isFinished {
             // بعد السبلاش نعرض صفحة الامبتي ستيت
-            EmptyStateView()
+           // EmptyStateView()
+            MainView()
         } else {
             // شكل السبلاش
             VStack {
