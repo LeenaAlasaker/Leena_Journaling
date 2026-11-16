@@ -10,6 +10,19 @@ import Combine
 
 class JournalViewModel: ObservableObject {
     @Published var journals: [Journal] = []
+    @Published var showBookmarkedOnly = false
+
+    var filteredJournals: [Journal] {
+        if showBookmarkedOnly {
+            return journals.filter { $0.isBookmarked }
+        } else {
+            return journals
+        }
+    }
+
+    func toggleBookmarkFilter() {
+        showBookmarkedOnly.toggle()
+    }
 
     func addJournal(_ journal: Journal) {
         journals.append(journal)

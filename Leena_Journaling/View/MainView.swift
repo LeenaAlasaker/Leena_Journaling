@@ -21,7 +21,7 @@ struct MainView: View {
                 if viewModel.journals.isEmpty {
                     EmptyStateView()
                 } else {
-                    List(viewModel.journals) { journal in
+                    List(viewModel.filteredJournals) { journal in
                         JournalCardView(journal: journal, viewModel: viewModel)
                             .onTapGesture {
                                 journalToEdit = journal
@@ -45,7 +45,12 @@ struct MainView: View {
             .navigationTitle("Journal")
             .toolbarTitleDisplayMode(.inlineLarge)
             .toolbar {
-                Button("Filter", systemImage: "line.3.horizontal.decrease") { }
+                Menu("Filter", systemImage: "line.3.horizontal.decrease") {
+                    Button("Sort by Bookmark") {
+                        viewModel.toggleBookmarkFilter()
+                    }
+                    Button("Sort by Entry Date") { }
+                }
                 Button("Add", systemImage: "plus") {
                     showNewJournal = true
                 }
