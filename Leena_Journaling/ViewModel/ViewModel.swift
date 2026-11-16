@@ -11,13 +11,25 @@ import Combine
 class JournalViewModel: ObservableObject {
     @Published var journals: [Journal] = []
     @Published var showBookmarkedOnly = false
+    @Published var searchText = ""
 
     var filteredJournals: [Journal] {
+        var result = journals
+
+        // فلتر البوكمارك
         if showBookmarkedOnly {
-            return journals.filter { $0.isBookmarked }
-        } else {
-            return journals
+            result = result.filter { $0.isBookmarked }
         }
+
+        // البحث
+        if !searchText.isEmpty {
+            result = result.filter {
+                $0.title.localizedCaseInsensitiveContains(searchText) ||
+                $0.content.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+
+        return result
     }
 
     func toggleBookmarkFilter() {

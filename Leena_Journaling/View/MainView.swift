@@ -9,7 +9,6 @@ import SwiftUI
 struct MainView: View {
 
     @StateObject private var viewModel = JournalViewModel()
-    @State private var searchText = ""
     @State private var showNewJournal = false
     @State private var showDeleteAlert = false
     @State private var journalToDelete: Journal?
@@ -55,7 +54,7 @@ struct MainView: View {
                     showNewJournal = true
                 }
             }
-            .searchable(text: $searchText)
+            .searchable(text: $viewModel.searchText)
             .sheet(isPresented: $showNewJournal) {
                 NewJournalView(viewModel: viewModel)
             }
