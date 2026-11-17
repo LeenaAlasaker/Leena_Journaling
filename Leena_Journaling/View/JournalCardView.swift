@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 struct JournalCardView: View {
 
     let journal: Journal
