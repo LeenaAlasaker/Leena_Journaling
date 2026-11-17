@@ -4,7 +4,6 @@
 //
 //  Created by Leena Alasaker on 15/11/2026.
 //
-
 import SwiftUI
 
 struct DeleteAlertView: View {
@@ -16,11 +15,9 @@ struct DeleteAlertView: View {
     var body: some View {
         ZStack {
 
-            // الخلفية الغامقة
             Color.black.opacity(0.6)
                 .ignoresSafeArea()
 
-            // الكارد
             VStack(alignment: .leading, spacing: 8) {
                 Text("Delete Journal?")
                     .font(.headline)
@@ -30,18 +27,17 @@ struct DeleteAlertView: View {
 
                 HStack(spacing: 12) {
 
-                    // زر Cancel
                     Button {
                         isPresented = false
                     } label: {
                         Text("Cancel")
+                            .foregroundStyle(Color("TextPrimary"))
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color(white: 0.2))
+                            .background(Color(.tertiarySystemFill))
                             .clipShape(Capsule())
                     }
 
-                    // زر Delete
                     Button {
                         if let journal = journal {
                             viewModel.deleteJournal(journal)
@@ -49,17 +45,17 @@ struct DeleteAlertView: View {
                         isPresented = false
                     } label: {
                         Text("Delete")
+                            .foregroundStyle(.white)
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(.red)
                             .clipShape(Capsule())
                     }
                 }
-                .foregroundStyle(.white)
                 .padding(.top, 12)
             }
             .padding(20)
-            .background(Color(white: 0.1))
+            .background(Color(.secondarySystemBackground))
             .clipShape(RoundedRectangle(cornerRadius: 30))
             .padding(.horizontal, 30)
         }

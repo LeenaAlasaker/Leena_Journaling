@@ -18,19 +18,32 @@ struct EditJournalView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading) {
+            ScrollView {
+                VStack(alignment: .leading) {
 
-                TextField("Title", text: $journal.title)
-                    .font(.system(size: 34, weight: .bold))
+                    TextField("Title", text: $journal.title)
+                        .font(.system(size: 34, weight: .bold))
 
-                Text(journal.formattedDate)
-                    .foregroundStyle(.gray)
+                    Text(journal.formattedDate)
+                        .foregroundStyle(.gray)
 
-                TextField("Type your Journal...", text: $journal.content, axis: .vertical)
-
-                Spacer()
+                    TextEditor(text: $journal.content)
+                        .scrollContentBackground(.hidden)
+                        .frame(minHeight: 300)
+                        .overlay(alignment: .topLeading) {
+                            if journal.content.isEmpty {
+                                Text("Type your Journal...")
+                                    .foregroundStyle(.gray)
+                                    .padding(.top, 8)
+                                    .padding(.leading, 5)
+                                    .allowsHitTesting(false)
+                            }
+                        }
+                }
+                .padding()
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding()
+            .scrollDismissesKeyboard(.interactively)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Close", systemImage: "xmark") {
@@ -42,12 +55,15 @@ struct EditJournalView: View {
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save", systemImage: "checkmark") {
+                    Button {
                         viewModel.updateJournal(journal)
                         dismiss()
+                    } label: {
+                        Image(systemName: "checkmark")
+                            .foregroundStyle(.black)
                     }
                     .buttonStyle(.glassProminent)
-                    .tint(Color("TextAccent"))
+                    .tint(Color("PrimaryAccent"))
                 }
             }
             .onChange(of: journal.title) {
@@ -63,6 +79,6 @@ struct EditJournalView: View {
             }
         }
         .interactiveDismissDisabled(hasChanges)
-        .presentationBackground(Color("CardColor"))
+        .presentationBackground(Color(.secondarySystemBackground))
     }
 }

@@ -8,6 +8,12 @@
 import Foundation
 import Combine
 
+enum SortType {
+    case none
+    case bookmark
+    case date
+}
+
 class JournalViewModel: ObservableObject {
 
     @Published var journals: [Journal] = [] {
@@ -16,22 +22,19 @@ class JournalViewModel: ObservableObject {
         }
     }
 
-    @Published var showBookmarkedOnly = false
+    @Published var sortType: SortType = .none
     @Published var searchText = ""
 
-    // أول ما يشتغل التطبيق، نقرا المذكرات المحفوظة
     init() {
         load()
     }
 
-    // الحفظ في الجوال
     func save() {
         if let data = try? JSONEncoder().encode(journals) {
             UserDefaults.standard.set(data, forKey: "journals")
         }
     }
 
-    // القراءة من الجوال
     func load() {
         if let data = UserDefaults.standard.data(forKey: "journals"),
            let saved = try? JSONDecoder().decode([Journal].self, from: data) {
@@ -42,10 +45,6 @@ class JournalViewModel: ObservableObject {
     var filteredJournals: [Journal] {
         var result = journals
 
-        if showBookmarkedOnly {
-            result = result.filter { $0.isBookmarked }
-        }
-
         if !searchText.isEmpty {
             result = result.filter {
                 $0.title.localizedCaseInsensitiveContains(searchText) ||
@@ -53,11 +52,21 @@ class JournalViewModel: ObservableObject {
             }
         }
 
+        if sortType == .bookmark {
+            result = result.sorted { $0.isBookmarked && !$1.isBookmarked }
+        } else if sortType == .date {
+            result = result.sorted { $0.date < $1.date }
+        }
+
         return result
     }
 
-    func toggleBookmarkFilter() {
-        showBookmarkedOnly.toggle()
+    func sortByBookmark() {
+        sortType = .bookmark
+    }
+
+    func sortByDate() {
+        sortType = .date
     }
 
     func addJournal(_ journal: Journal) {

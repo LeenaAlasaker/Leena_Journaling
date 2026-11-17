@@ -9,16 +9,12 @@ import SwiftUI
 
 struct SplashView: View {
 
-    // متغير يتذكر: خلصت السبلاش ولا لا؟
     @State private var isFinished = false
 
     var body: some View {
         if isFinished {
-            // بعد السبلاش نعرض صفحة الامبتي ستيت
-           // EmptyStateView()
             MainView()
         } else {
-            // شكل السبلاش
             VStack {
                 Image("ImageTwo")
                     .resizable()
@@ -31,12 +27,9 @@ struct SplashView: View {
                     .font(.system(size: 21, weight: .light))
                     .padding(.top, -20)
             }
-            .foregroundStyle(.white)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(.black)
             .onAppear {
-                // بعد ثانيتين غيّر المتغير
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     isFinished = true
                 }
             }

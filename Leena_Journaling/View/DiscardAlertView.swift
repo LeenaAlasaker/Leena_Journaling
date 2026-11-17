@@ -28,7 +28,7 @@ struct DiscardAlertView: View {
                         .foregroundStyle(.red)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color(white: 0.25))
+                        .background(Color(.tertiarySystemFill))
                         .clipShape(Capsule())
                 }
 
@@ -36,16 +36,15 @@ struct DiscardAlertView: View {
                     isPresented = false
                 } label: {
                     Text("Keep Editing")
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color("TextPrimary"))
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color(white: 0.25))
+                        .background(Color(.tertiarySystemFill))
                         .clipShape(Capsule())
                 }
             }
             .padding(20)
-            .background(Color(white: 0.12))
-            .clipShape(RoundedRectangle(cornerRadius: 30))
+            .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 30))
             .frame(maxWidth: 320)
             .padding()
         }

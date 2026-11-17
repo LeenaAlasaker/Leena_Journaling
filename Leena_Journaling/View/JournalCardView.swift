@@ -15,7 +15,6 @@ struct JournalCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
 
-            // العنوان + البوكمارك
             HStack {
                 Text(journal.title)
                     .font(.system(size: 24, weight: .bold))
@@ -33,27 +32,16 @@ struct JournalCardView: View {
                 .buttonStyle(.plain)
             }
 
-            // التاريخ
             Text(journal.formattedDate)
                 .foregroundStyle(.gray)
 
-            // الكلام
             Text(journal.content)
                 .padding(.top, 8)
                 .lineLimit(5)
         }
         .padding(24)
-        //.frame(maxWidth: .infinity, alignment: .leading)
         .frame(maxWidth: .infinity, minHeight: 227, alignment: .topLeading)
-        .background(Color("SurfaceCard"))
+        .background(Color(.secondarySystemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 30))
     }
-}
-
-#Preview {
-    JournalCardView(
-        journal: Journal(title: "My Birthday", content: "Hello"),
-        viewModel: JournalViewModel()
-    )
-    .preferredColorScheme(.dark)
 }

@@ -4,8 +4,8 @@
 //
 //  Created by Leena Alasaker on 12/11/2026.
 //
-import SwiftUI
 
+import SwiftUI
 struct MainView: View {
 
     @StateObject private var viewModel = JournalViewModel()
@@ -39,6 +39,7 @@ struct MainView: View {
                             }
                     }
                     .listStyle(.plain)
+                    .scrollDismissesKeyboard(.immediately)
                 }
             }
             .navigationTitle("Journal")
@@ -46,9 +47,11 @@ struct MainView: View {
             .toolbar {
                 Menu("Filter", systemImage: "line.3.horizontal.decrease") {
                     Button("Sort by Bookmark") {
-                        viewModel.toggleBookmarkFilter()
+                        viewModel.sortByBookmark()
                     }
-                    Button("Sort by Entry Date") { }
+                    Button("Sort by Entry Date") {
+                        viewModel.sortByDate()
+                    }
                 }
                 Button("Add", systemImage: "plus") {
                     showNewJournal = true
@@ -62,7 +65,6 @@ struct MainView: View {
                 EditJournalView(viewModel: viewModel, journal: journal)
             }
         }
-        .preferredColorScheme(.dark)
         .overlay {
             if showDeleteAlert {
                 DeleteAlertView(
