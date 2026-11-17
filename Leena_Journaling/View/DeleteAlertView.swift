@@ -31,6 +31,7 @@ struct DeleteAlertView: View {
                         isPresented = false
                     } label: {
                         Text("Cancel")
+                            .fontWeight(.semibold)
                             .foregroundStyle(Color("TextPrimary"))
                             .frame(maxWidth: .infinity)
                             .padding()
@@ -45,6 +46,7 @@ struct DeleteAlertView: View {
                         isPresented = false
                     } label: {
                         Text("Delete")
+                            .fontWeight(.semibold)
                             .foregroundStyle(.white)
                             .frame(maxWidth: .infinity)
                             .padding()
