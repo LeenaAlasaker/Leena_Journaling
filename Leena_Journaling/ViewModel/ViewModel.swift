@@ -61,12 +61,22 @@ class JournalViewModel: ObservableObject {
         return result
     }
 
+    // ضغطة: بوكمارك فوق — ضغطة ثانية: بدون ترتيب
     func sortByBookmark() {
-        sortType = .bookmark
+        if sortType == .bookmark {
+            sortType = .none
+        } else {
+            sortType = .bookmark
+        }
     }
 
+    // ضغطة: الأقدم أول — ضغطة ثانية: بدون ترتيب
     func sortByDate() {
-        sortType = .date
+        if sortType == .date {
+            sortType = .none
+        } else {
+            sortType = .date
+        }
     }
 
     func addJournal(_ journal: Journal) {
@@ -89,3 +99,4 @@ class JournalViewModel: ObservableObject {
         }
     }
 }
+  
